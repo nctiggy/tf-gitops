@@ -1,0 +1,12 @@
+ingress:
+  main:
+    enabled: true
+    hosts:
+    - host: node-red.home.craigcloud.io
+    annotations:
+      ingress.kubernetes.io/force-ssl-redirect: "true"
+      kubernetes.io/ingress.class: contour
+    tls:
+    - secretName: nodered
+      hosts:
+      - node-red.home.craigcloud.io
