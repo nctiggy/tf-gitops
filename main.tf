@@ -27,7 +27,7 @@ resource "helm_release" "contour" {
   name       = "contour"
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "contour"
-  version    = "1.18.0"
+  version    = "5.1.0"
 
   set {
     name  = "envoy.useHostPort"
