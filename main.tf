@@ -115,30 +115,6 @@ data "github_repository" "main" {
   full_name = "${var.github_owner}/${var.github_repository}"
 }
 
-resource "github_repository_file" "install" {
-  repository          = data.github_repository.main.name
-  file                = data.flux_install.main.path
-  content             = data.flux_install.main.content
-  branch              = var.github_branch
-  overwrite_on_create = true
-}
-
-resource "github_repository_file" "sync" {
-  repository          = var.github_repository
-  file                = data.flux_sync.main.path
-  content             = data.flux_sync.main.content
-  branch              = var.github_branch
-  overwrite_on_create = true
-}
-
-resource "github_repository_file" "kustomize" {
-  repository          = var.github_repository
-  file                = data.flux_sync.main.kustomize_path
-  content             = data.flux_sync.main.kustomize_content
-  branch              = var.github_branch
-  overwrite_on_create = true
-}
-
 # For flux to fetch source
 resource "github_repository_deploy_key" "flux" {
   title      = var.github_deploy_key_title
