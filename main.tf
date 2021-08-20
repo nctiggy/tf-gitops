@@ -47,6 +47,7 @@ resource "kubernetes_namespace" "flux_system" {
   }
 
   lifecycle {
+    prevent_destroy: true
     ignore_changes = [
       metadata[0].labels,
     ]
