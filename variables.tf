@@ -1,7 +1,8 @@
-variable "gcp_credentials" {
-  type        = string
-  sensitive   = true
-  description = "Google Cloud service account credentials JSON"
+variable "cluster_ca_cert" {
+}
+variable "client_cert" {
+}
+variable "client_key" {
 }
 
 variable "gcp_project_id" {
