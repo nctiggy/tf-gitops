@@ -1,18 +1,3 @@
-resource "google_compute_network" "vpc_network" {
-  name                    = "terraform-network"
-  auto_create_subnetworks = "true"
-}
-
-resource "google_container_cluster" "main" {
-  name             = var.gke_name
-  location         = var.gcp_region
-  network          = google_compute_network.vpc_network.self_link
-  enable_autopilot = true
-}
-
-data "google_client_config" "default" {
-}
-
 data "flux_install" "main" {
   target_path = var.target_path
 }
@@ -24,19 +9,17 @@ data "flux_sync" "main" {
 }
 
 provider "kubernetes" {
-  host  = "https://${google_container_cluster.main.endpoint}"
-  token = data.google_client_config.default.access_token
-  cluster_ca_certificate = base64decode(
-    google_container_cluster.main.master_auth[0].cluster_ca_certificate,
-  )
+  host  = "https://k8s.bluehairfreak.com"
+  cluster_ca_certificate = var.cluster_ca_cert
+  client_certificat = var.client_cert
+  client_key = var.client_key
 }
 
 provider "kubectl" {
-  host  = "https://${google_container_cluster.main.endpoint}"
-  token = data.google_client_config.default.access_token
-  cluster_ca_certificate = base64decode(
-    google_container_cluster.main.master_auth[0].cluster_ca_certificate,
-  )
+  host  = "https://k8s.bluehairfreak.com"
+  cluster_ca_certificate = var.cluster_ca_cert
+  client_certificat = var.client_cert
+  client_key = var.client_key
   load_config_file = false
 }
 
