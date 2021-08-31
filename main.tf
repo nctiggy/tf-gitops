@@ -9,14 +9,14 @@ data "flux_sync" "main" {
 }
 
 provider "kubernetes" {
-  host  = "https://k8s.bluehairfreak.com"
+  host  = "https://k8s.bluehairfreak.com:6443"
   cluster_ca_certificate = var.cluster_ca_cert
   client_certificate = var.client_cert
   client_key = var.client_key
 }
 
 provider "kubectl" {
-  host  = "https://k8s.bluehairfreak.com"
+  host  = "https://k8s.bluehairfreak.com:6443"
   cluster_ca_certificate = var.cluster_ca_cert
   client_certificate = var.client_cert
   client_key = var.client_key
