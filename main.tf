@@ -36,6 +36,12 @@ resource "kubernetes_namespace" "flux_system" {
   }
 }
 
+provisioner "local-exec" {
+  when       = destroy
+  command    = "kubectl --kubeconfig ${self.triggers.kubeconfig} patch customresourcedefinition helmcharts.source.toolkit.fluxcd.io helmreleases.helm.toolkit.fluxcd.io helmrepositories.source.toolkit.fluxcd.io kustomizations.kustomize.toolkit.fluxcd.io -p '{\"metadata\":{\"finalizers\":null}}'"
+  on_failure = continue
+}
+
 data "kubectl_file_documents" "install" {
   content = data.flux_install.main.content
 }
